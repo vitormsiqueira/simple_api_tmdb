@@ -84,6 +84,24 @@ def keywords_name(base_url, api_key, id_keyword):
         return keyword_name
 
 
+def get_review_movie(base_url, api_key, id_movie):
+
+    reviews = []
+
+    review_movie = requests.get(base_url+"movie/"+id_movie+"/reviews?api_key={}&language=en-US&page=1".format(api_key))
+
+    if review_movie.status_code != 200:
+        print('Ocorreu um erro na solicitação')
+        exit()
+    else:
+        # converte o response em json
+        m_d = review_movie.json()
+
+        for review in m_d.get('results'):
+            reviews.append(review['content'])
+
+        return reviews
+
 ###########################################################################################
 
 
@@ -93,4 +111,6 @@ def keywords_name(base_url, api_key, id_keyword):
 
 # pprint(keywords_from_movie(base_url, api_key, '155'))
 
-pprint(keywords_name(base_url, api_key, '1308'))
+# pprint(keywords_name(base_url, api_key, '1308'))
+
+pprint(get_review_movie(base_url, api_key, '155'))

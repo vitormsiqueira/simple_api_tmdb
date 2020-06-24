@@ -102,6 +102,8 @@ def get_review_movie(base_url, api_key, id_movie):
 
         return reviews
 
+def get_popular_movies(base_url, api_key, id_movie):
+
 ###########################################################################################
 
 

@@ -102,7 +102,24 @@ def get_review_movie(base_url, api_key, id_movie):
 
         return reviews
 
-def get_popular_movies(base_url, api_key, id_movie):
+def get_popular_movies(base_url, api_key):
+    
+    populars = []
+
+    popular_movie = requests.get(base_url+"movie/popular?api_key={}&language=en-US&page=1/".format(api_key))
+
+    if popular_movie.status_code != 200:
+        print('Ocorreu um erro na solicitação')
+        exit()
+    else:
+        # converte o response em json
+        m_d = popular_movie.json()
+
+        for popular in m_d.get('results'):
+            populars.append(popular['title'])
+
+        return populars
+
 
 ###########################################################################################
 
@@ -115,4 +132,6 @@ def get_popular_movies(base_url, api_key, id_movie):
 
 # pprint(keywords_name(base_url, api_key, '1308'))
 
-pprint(get_review_movie(base_url, api_key, '155'))
+# pprint(get_review_movie(base_url, api_key, '155'))
+
+pprint(get_popular_movies(base_url, api_key))
